@@ -1,0 +1,55 @@
+# ----------------------
+# Project-specific
+# ----------------------
+HELP.md                  # Eğer bunu Git’e eklemek istemiyorsan, yoksa silebilirsin
+target/                  # Maven build çıktıları
+*.log                    # Log dosyaları
+
+# ----------------------
+# Maven / Wrapper
+# ----------------------
+.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# ----------------------
+# IDEs
+# ----------------------
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
+
+# ----------------------
+# Docker / Env
+# ----------------------
+docker-compose.override.yml
+*.env
+
+# ----------------------
+# GraalVM / Polyglot
+# ----------------------
+/native-image/            # Eğer native-image build edersen

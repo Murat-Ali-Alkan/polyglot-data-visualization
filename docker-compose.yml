@@ -1,0 +1,45 @@
+version: "3.9"
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+      - ./:/data/csv_source
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  mongo-import:
+    image: mongo:latest
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    volumes:
+      - ./:/data/csv_source
+    command: >
+      mongoimport
+      --host mongodb
+      --db swe307_db
+      --collection data_points
+      --type csv
+      --headerline
+      --file /data/csv_source/users.csv
+
+  java-app:
+    image: java-r-graalvm
+    container_name: java-polyglot-app
+    depends_on:
+      - mongodb
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb://mongodb:27017/swe307_db
+
+volumes:
+  mongo_data:
